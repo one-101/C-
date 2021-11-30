@@ -1,32 +1,32 @@
 #include<iostream>
 #include<cmath>
 using namespace std;
-class SavingsAccount {//´¢ĞîÕË»§Àà
+class SavingsAccount {//å‚¨è“„è´¦æˆ·ç±»
 private:
-	int id;						//ÕË»§
-	double balance;		//Óà¶î
-	double rate;				//´æ¿îÄêÀûÂÊ
-	int lastDate;				//ÉÏ´Î±ä¸üÓà¶îµÄÊ±ÆÚ
-	double accumulation;//Óà¶î°´ÈÕÀÛ¼ÓÖ®ºÍ
-	//¼ÇÂ¼Ò»±ÊÕÊ£¬dateÎªÈÕÆÚ£¬amountÎª½ğ¶î£¬descÎªËµÃ÷
+	int id;					//è´¦æˆ·
+	double balance;				//ä½™é¢
+	double rate;				//å­˜æ¬¾å¹´åˆ©ç‡
+	int lastDate;				//ä¸Šæ¬¡å˜æ›´ä½™é¢çš„æ—¶æœŸ
+	double accumulation;//ä½™é¢æŒ‰æ—¥ç´¯åŠ ä¹‹å’Œ
+	//è®°å½•ä¸€ç¬”å¸ï¼Œdateä¸ºæ—¥æœŸï¼Œamountä¸ºé‡‘é¢ï¼Œdescä¸ºè¯´æ˜
 	void record(int date, double amount);
-	//»ñµÃµ½Ö¸¶¨ÈÕÆÚÎªÖ¹µÄ´æ¿î½ğ¶î°´ÈÕÀÛ»ıÖµ
+	//è·å¾—åˆ°æŒ‡å®šæ—¥æœŸä¸ºæ­¢çš„å­˜æ¬¾é‡‘é¢æŒ‰æ—¥ç´¯ç§¯å€¼
 	double accumlate(int date)const {
 		return accumulation + balance * (date - lastDate);
 	}
 public:
-	//¹¹Ôìº¯Êı
+	//æ„é€ å‡½æ•°
 	SavingsAccount(int data, int id, double rate);
 	int getld() { return id; }
 	double getBalance() {double balance;}
 	double getRate() { double rate; }
-	//´æÈëÏÖ½ğ
+	//å­˜å…¥ç°é‡‘
 	void deposit(int date, double amount);
-	//È¡³öÏÖ½ğ
+	//å–å‡ºç°é‡‘
 	void withdraw(int date, double amount);
-	//½áËãÀûÏ¢£¬Ã¿Äê1ÔÂ1ÈÕµ÷ÓÃÒ»´Î¸Ãº¯Êı
+	//ç»“ç®—åˆ©æ¯ï¼Œæ¯å¹´1æœˆ1æ—¥è°ƒç”¨ä¸€æ¬¡è¯¥å‡½æ•°
 	void settle(int date);
-	//ÏÔÊ¾ÕË»§ĞÅÏ¢
+	//æ˜¾ç¤ºè´¦æˆ·ä¿¡æ¯
 	void show();
 };
 SavingsAccount::SavingsAccount(int date, int id, double rate)
@@ -37,7 +37,7 @@ SavingsAccount::SavingsAccount(int date, int id, double rate)
 void SavingsAccount::record(int date, double amount) {
 	accumulation = accumlate(date);
 	lastDate = date;
-	amount = floor(amount * 100 + 0.5) / 100;//ËÄÉáÎåÈë¼ÆËã£¬±£ÁôĞ¡ÊıµãºóÁ½Î»
+	amount = floor(amount * 100 + 0.5) / 100;//å››èˆäº”å…¥è®¡ç®—ï¼Œä¿ç•™å°æ•°ç‚¹åä¸¤ä½
 	balance += amount;
 	cout << date << "\t#" << id << " \t" << amount << "\t" << balance << endl;
 }
@@ -54,7 +54,7 @@ void SavingsAccount::withdraw(int date, double amount) {
 }
 
 void SavingsAccount::settle(int date) {
-	double interest = accumlate(date) * rate / 365;			//¼ÆËãÄêÏ¢
+	double interest = accumlate(date) * rate / 365;		//è®¡ç®—å¹´æ¯
 	if (interest != 0)
 		record(date, interest);
 	accumulation = 0;
@@ -64,18 +64,18 @@ void SavingsAccount::show() {
 	cout << "#" << id << "\tBalance: " << balance;
 }
 int main() {
-	//´´½¨Á½¸öÕË»§
+	//åˆ›å»ºä¸¤ä¸ªè´¦æˆ·
 	SavingsAccount sa0(1, 123456, 0.015);
 	SavingsAccount sa1(1, 126426, 0.015);
-	//¼¸±ÊÕËÄ¿
+	//å‡ ç¬”è´¦ç›®
 	sa0.deposit(5, 5000);
 	sa1.deposit(25, 10000);
 	sa0.deposit(45, 5500);
 	sa1.withdraw(60, 4000);
-	//¿ª»§ºó90Ìì½áËãÕË»§ÄêÏ¢
+	//å¼€æˆ·å90å¤©ç»“ç®—è´¦æˆ·å¹´æ¯
 	sa0.settle(90);
 	sa1.settle(90);
-	//Êä³ö¸÷ÕË»§ĞÅÏ¢
+	//è¾“å‡ºå„è´¦æˆ·ä¿¡æ¯
 	sa0.show();	cout << endl;
 	sa1.show();	cout << endl;
 	return 0;
